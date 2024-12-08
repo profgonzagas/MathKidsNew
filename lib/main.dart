@@ -329,7 +329,7 @@ class _QuizSettingsPageState extends State<QuizSettingsPage> {
       }
 
       while (options.length < 3) {
-        int wrongAnswer = Random().nextInt(20) + (startValue * 2);
+        int wrongAnswer = Random().nextInt(22) + (startValue * 2);
         if (wrongAnswer != correctAnswer && !options.contains(wrongAnswer)) {
           options.add(wrongAnswer);
         }
