@@ -141,17 +141,20 @@ class QuizState with ChangeNotifier {
     prefs.setBool('darkMode', _isDarkMode);
   }
 }
-
 class HomePage extends StatelessWidget {
   // Função para abrir o Instagram
   Future<void> _openInstagram() async {
-    final url = 'https://www.instagram.com/profgonzagas/';
-    if (await canLaunch(url)) {
-      await launch(url);
+    const url = 'https://www.instagram.com/gonzagasprof/';
+    final Uri uri = Uri.parse(url);
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
-      throw 'Não foi possível abrir o Instagram $url';
+      throw 'Não foi possível abrir o Instagram ou o navegador.';
     }
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -183,13 +186,13 @@ class HomePage extends StatelessWidget {
               Navigator.push(context, MaterialPageRoute(builder: (context) => QuizSettingsPage(operation: 'Adição')));
             }),
             MathOptionButton('Subtração', Icons.remove, Colors.lightGreen, () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => QuizSettingsPage(operation: 'Subtraction')));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => QuizSettingsPage(operation: 'Subtração')));
             }),
             MathOptionButton('Multiplicação', Icons.clear, Colors.lightBlue, () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => QuizSettingsPage(operation: 'Multiplication')));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => QuizSettingsPage(operation: 'Multiplicação')));
             }),
             MathOptionButton('Divisão', Icons.horizontal_rule, Colors.pinkAccent, () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => QuizSettingsPage(operation: 'Division')));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => QuizSettingsPage(operation: 'Divisão')));
             }),
           ],
         ),
@@ -198,14 +201,14 @@ class HomePage extends StatelessWidget {
   }
 }
 // Função para abrir o Instagram
-Future<void> _openInstagram() async {
+/*Future<void> _openInstagram() async {
   const url = 'https://www.instagram.com/profgonzagas';
   if (await canLaunch(url)) {
     await launch(url);
   } else {
     throw 'Não foi possível abrir o Instagram.';
   }
-}
+}*/
 class MathOptionButton extends StatelessWidget {
   final String label;
   final IconData icon;
@@ -296,8 +299,18 @@ class _QuizSettingsPageState extends State<QuizSettingsPage> {
 
   void _generateQuiz() {
     final int numberOfQuestions = int.tryParse(_questionsController.text) ?? 5;
-    final int startValue = int.tryParse(_startValueController.text) ?? 1;
-    final int endValue = int.tryParse(_endValueController.text) ?? 10;
+    int startValue = int.tryParse(_startValueController.text) ?? 1;
+    int endValue = int.tryParse(_endValueController.text) ?? 10;
+
+    // Garantir que startValue seja menor ou igual a endValue
+    if (startValue > endValue) {
+      // Troca os valores para garantir que startValue <= endValue
+      int temp = startValue;
+      startValue = endValue;
+      endValue = temp;
+      // Ou, se preferir, exiba um alerta ou mensagem para o usuário:
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Valor inicial não pode ser maior que o valor final!')));
+    }
 
     List<Map<String, dynamic>> questions = [];
 
@@ -313,23 +326,34 @@ class _QuizSettingsPageState extends State<QuizSettingsPage> {
           correctAnswer = num1 + num2;
           questionText = '$num1 + $num2';
           break;
-        case 'Subtraction':
+        case 'Subtração':
+          num1 = Random().nextInt(endValue - startValue + 1) + startValue;
+          num2 = Random().nextInt(num1 - startValue + 1); // Garantir que num1 > num2
           correctAnswer = num1 - num2;
           questionText = '$num1 - $num2';
           break;
-        case 'Multiplication':
+        case 'Multiplicação':
           correctAnswer = num1 * num2;
           questionText = '$num1 × $num2';
           break;
-        case 'Division':
-          num1 = num2 * Random().nextInt(10) + 1;
-          correctAnswer = num1 ~/ num2;
+        case 'Divisão':
+        // Garantir que num2 não seja zero
+          num2 = Random().nextInt(endValue - startValue + 1) + startValue;
+          while (num2 == 0) {
+            num2 = Random().nextInt(endValue - startValue + 1) + startValue;
+          }
+
+          // Gerar num1 como um múltiplo exato de num2
+          num1 = num2 * (Random().nextInt((endValue ~/ num2)) + 1); // Garante que num1 seja múltiplo de num2
+          correctAnswer = num1 ~/ num2;  // Realiza a divisão inteira
           questionText = '$num1 ÷ $num2';
           break;
+
+
       }
 
       while (options.length < 3) {
-        int wrongAnswer = Random().nextInt(22) + (startValue * 2);
+        int wrongAnswer = Random().nextInt(20) + (startValue * 2);
         if (wrongAnswer != correctAnswer && !options.contains(wrongAnswer)) {
           options.add(wrongAnswer);
         }
@@ -348,6 +372,7 @@ class _QuizSettingsPageState extends State<QuizSettingsPage> {
       ),
     );
   }
+
 }
 
 class QuizPage extends StatefulWidget {
