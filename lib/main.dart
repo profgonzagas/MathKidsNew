@@ -1,13 +1,13 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:math';
-import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'dart:async';
-import 'package:shared_preferences_platform_interface/shared_preferences_platform_interface.dart';
+
 //https://docs.flutter.dev/platform-integration/platform-channels
 import 'splash.dart';
 
