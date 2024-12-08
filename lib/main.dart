@@ -165,7 +165,7 @@ class HomePage extends StatelessWidget {
             onPressed: () => context.read<QuizState>().toggleDarkMode(),
           ),
           IconButton(
-            icon: FaIcon(FontAwesomeIcons.instagram),  // Ícone do Instagram usando FontAwesome
+            icon: FaIcon(FontAwesomeIcons.instagram),
             onPressed: () {
               _openInstagram();
             },
@@ -237,8 +237,6 @@ class MathOptionButton extends StatelessWidget {
     );
   }
 }
-
-// O restante do código continua sem alterações
 
 
 class QuizSettingsPage extends StatefulWidget {
@@ -391,9 +389,9 @@ class _QuizPageState extends State<QuizPage> {
 
 // Toque o som baseado na resposta
     if (isCorrect) {
-      soundPlayer.playSound('correct'); // Som para acerto
+      soundPlayer.playSound('correct');
     } else {
-      soundPlayer.playSound('incorrect'); // Som para erro
+      soundPlayer.playSound('incorrect');
     }
 
     if (_currentQuestionIndex < widget.questions.length - 1) {

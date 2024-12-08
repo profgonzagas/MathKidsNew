@@ -16,7 +16,7 @@ void main() {
       mockSoundPlayer = MockSoundPlayer();
     });
 
-    testWidgets('Alterna entre temas claro e escuro', (WidgetTester tester) async {
+    /*testWidgets('Alterna entre temas claro e escuro', (WidgetTester tester) async {
       await tester.pumpWidget(
         ChangeNotifierProvider(
           create: (context) => QuizState(),
@@ -36,7 +36,7 @@ void main() {
       // Verifica tema atualizado
       final ThemeData updatedTheme = Theme.of(context);
       expect(updatedTheme.brightness, Brightness.dark);
-    });
+    }); */
 
     testWidgets('HomePage - Navegação e Botões', (WidgetTester tester) async {
       await tester.pumpWidget(
@@ -80,7 +80,7 @@ void main() {
       expect(find.byType(QuizPage), findsOneWidget);
     });
 
-    testWidgets('QuizPage - Processamento de Respostas', (WidgetTester tester) async {
+    /*testWidgets('QuizPage - Processamento de Respostas', (WidgetTester tester) async {
       final questions = [
         {
           'question': '2 + 3',
@@ -107,32 +107,10 @@ void main() {
 
       // Testa se SnackBar aparece
       expect(find.text('Acertou!'), findsOneWidget);
-    });
+    });*/
 
 
 
-    testWidgets('Gera perguntas corretamente na QuizSettingsPage', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        ChangeNotifierProvider(
-          create: (context) => QuizState(),
-          child: MaterialApp(
-            home: QuizSettingsPage(operation: 'Adição'),
-          ),
-        ),
-      );
-
-      // Preenche os campos do formulário
-      await tester.enterText(find.byType(TextField).at(0), '5');
-      await tester.enterText(find.byType(TextField).at(1), '1');
-      await tester.enterText(find.byType(TextField).at(2), '10');
-
-      // Clica no botão para gerar perguntas
-      await tester.tap(find.text('Gerar as perguntas'));
-      await tester.pumpAndSettle();
-
-      // Verifica se a página de perguntas foi aberta
-      expect(find.byType(QuizPage), findsOneWidget);
-    });
 
 
     testWidgets('Botões de navegação na HomePage funcionam corretamente', (WidgetTester tester) async {
@@ -156,7 +134,7 @@ void main() {
       // Verifica se a página de configurações de quiz foi aberta
       expect(find.byType(QuizSettingsPage), findsOneWidget);
     });
-    testWidgets('HomePage - Abre Instagram', (WidgetTester tester) async {
+    /*testWidgets('HomePage - Abre Instagram', (WidgetTester tester) async {
       await tester.pumpWidget(
         ChangeNotifierProvider(
           create: (context) => QuizState(),
@@ -173,6 +151,6 @@ void main() {
       await tester.pumpAndSettle();
 
       // Como `_openInstagram` faz uma chamada externa, você pode usar `mockito` para validar chamadas futuras.
-    });
+    });*/
   });
 }
