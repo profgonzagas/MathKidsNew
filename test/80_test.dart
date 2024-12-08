@@ -68,7 +68,7 @@ void main() {
       );
 
       // Preenche campos
-      await tester.enterText(find.byType(TextField).at(0), '3'); // Número de questões
+      await tester.enterText(find.byType(TextField).at(0), '4'); // Número de questões
       await tester.enterText(find.byType(TextField).at(1), '2'); // Valor inicial
       await tester.enterText(find.byType(TextField).at(2), '5'); // Valor final
 
