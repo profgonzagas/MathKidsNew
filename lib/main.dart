@@ -144,13 +144,11 @@ class QuizState with ChangeNotifier {
 class HomePage extends StatelessWidget {
   // Função para abrir o Instagram
   Future<void> _openInstagram() async {
-    const url = 'https://www.instagram.com/gonzagasprof/';
-    final Uri uri = Uri.parse(url);
-
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    final url = 'https://www.instagram.com/gonzagasprof/';
+    if (await canLaunch(url)) {
+      await launch(url);
     } else {
-      throw 'Não foi possível abrir o Instagram ou o navegador.';
+      throw 'Não foi possível abrir o Instagram $url';
     }
   }
 
@@ -308,7 +306,7 @@ class _QuizSettingsPageState extends State<QuizSettingsPage> {
       int temp = startValue;
       startValue = endValue;
       endValue = temp;
-      // Ou, se preferir, exiba um alerta ou mensagem para o usuário:
+
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Valor inicial não pode ser maior que o valor final!')));
     }
 
