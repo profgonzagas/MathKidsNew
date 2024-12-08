@@ -198,15 +198,8 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-// Função para abrir o Instagram
-/*Future<void> _openInstagram() async {
-  const url = 'https://www.instagram.com/profgonzagas';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Não foi possível abrir o Instagram.';
-  }
-}*/
+
+
 class MathOptionButton extends StatelessWidget {
   final String label;
   final IconData icon;
